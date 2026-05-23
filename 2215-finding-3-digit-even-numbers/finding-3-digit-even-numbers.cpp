@@ -1,27 +1,33 @@
 class Solution {
 public:
-    void helper(vector<int>& digits,vector<int>& comb){
-        
-        for(int i=0;i<digits.size();++i){
-            if(digits[i]==0) continue;
-            for(int j=0;j<digits.size();++j){
-                if(i==j) continue;
-                for(int k=0;k<digits.size();++k){
-                    if(j==k || i==k) continue;
-                    if(digits[k]%2==0) comb.push_back(100*digits[i]+10*digits[j]+digits[k]);
-                }
-            }
-        }
-    }
+    
     vector<int> findEvenNumbers(vector<int>& digits) {
-        vector<int> comb;
-        helper(digits,comb);
-        set<int> ans;
-        for(int ele: comb){
-            ans.insert(ele);
-        }
-        vector<int>finalans(ans.begin(),ans.end());
         
-        return finalans;
-    }
-};
+        unordered_map<int,int> mp;
+        vector<int> ans;
+        for(int ele: digits){
+            mp[ele]++;
+        }
+
+        for(int i=100;i<1000;i+=2){
+             int n = i;
+             int a = n%10;
+             n=n/10;
+             int b = n%10;
+             n=n/10;
+             int c =n%10;
+             if(mp.find(a)!=mp.end()) {
+                mp[a]--;
+                if(mp[a]==0) mp.erase(a);
+                if(mp.find(b)!=mp.end()){
+                    mp[b]--;
+                    if(mp[b]==0)mp.erase(b);
+                    if(mp.find(c)!=mp.end()) ans.push_back(i);
+                    mp[b]++;
+                }
+                    mp[a]++;
+             }
+            
+        }
+         return ans;
+    }};
