@@ -8,7 +8,7 @@ public:
             q.push(ele);
         }
         
-        while(q.size()>2){
+        while(q.size()>1){
 
             int t =q.top();
               q.pop();
@@ -18,12 +18,10 @@ public:
                 q.push(w);
               }
               else q.pop();
+              
+              if(q.size()==0) return 0;
         }
-        if(q.size()==2){
-        int t = q.top();
-        q.pop();
-        return t-q.top();
-        }
+       
         return q.top();
     }
 };
