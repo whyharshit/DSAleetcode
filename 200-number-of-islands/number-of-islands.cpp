@@ -1,50 +1,33 @@
 class Solution {
 public:
+  
+
+
+    void dfs(int rows, int cols,vector<vector<char>>& grid,vector<vector<bool>>& visited ,int m,int n){
+        visited[rows][cols]=true;
+        if(rows-1 >=0 && !visited[rows-1][cols]&& grid[rows-1][cols]=='1') dfs(rows-1,cols,grid,visited,m,n);
+        if(rows+1<m && !visited[rows+1][cols]&& grid[rows+1][cols]=='1') dfs(rows+1,cols,grid,visited,m,n);
+        if(cols+1<n && !visited[rows][cols+1]&& grid[rows][cols+1]=='1') dfs(rows,cols+1,grid,visited,m,n);
+        if(cols-1>=0 && !visited[rows][cols-1]&& grid[rows][cols-1]=='1') dfs(rows,cols-1,grid,visited,m,n);
+
+    }
     
     int numIslands(vector<vector<char>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+        vector<vector<bool>> visited(rows,vector<bool>(cols,false));
+        int count=0;
 
-
-        int m= grid.size();
-        int n = grid[0].size();
-        vector<bool>visited(n*m,false);
-        int island =0;
-        for(int i=0;i<m;++i){
-            for(int j=0;j<n;++j){
-                if(grid[i][j]=='1' &&!visited[i*n+j] ){
-                queue<pair<int,int>> q;
-                q.push({i,j});
-                visited[i*n+j]=true;
-                while(!q.empty()){
-                    auto curr = q.front();
-                    int row = q.front().first;
-                    int col = q.front().second;
-                    q.pop();
-                    if(row+1<m && !visited[(row+1)*n +col] && grid[row+1][col]=='1') {
-                        visited[(row+1)*n +col]=true;
-                        q.push({row+1,col});
-                    }
-                    if(col+1<n && !visited[(row)*n +col+1] && grid[row][col+1]=='1') {
-                        visited[row*n +col+1]=true;
-                        q.push({row,col+1});
-                    }
-
-                    if(row-1>=0 && !visited[(row-1)*n +col] && grid[row-1][col]=='1') {
-                        visited[(row-1)*n +col]=true;
-                        q.push({row-1,col});
-                    }
-                    if(col-1>=0 && !visited[(row)*n+col-1] && grid[row][col-1]=='1') {
-                        visited[row*n+col-1]=true;
-                        q.push({row,col-1});
-                    }
+        for(int i=0;i<rows;++i){
+            for(int j=0;j<cols;++j){
+                if(!visited[i][j] && grid[i][j]=='1'){ dfs(i,j,grid,visited,rows,cols);
+                count++;
                 }
-                            island++;
-                            }
 
-        }}
+            }
+        }
 
-
-        
-
-        return island;
+       return count;
+     
     }
 };
