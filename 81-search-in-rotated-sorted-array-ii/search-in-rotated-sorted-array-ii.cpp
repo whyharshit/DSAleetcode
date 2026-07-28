@@ -20,7 +20,7 @@ public:
         if(nums[mid]>=nums[lo]){
            
            
-           if(nums[mid]>=target && target>=nums[lo]){
+           if(nums[mid]>target && target>=nums[lo]){
             hi=mid-1;
            }
            else{
@@ -33,7 +33,7 @@ public:
         }
 
         else{
-            if(nums[hi]>=target  && target >= nums[mid]) {
+            if(nums[hi]>=target  && target >nums[mid]) {
                 lo=mid+1;
             }
 
